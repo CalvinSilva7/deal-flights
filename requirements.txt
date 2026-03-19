@@ -1,3 +1,5 @@
 requests
 python-dotenv
-anthropic
+anthropicresend
+resend
+google-search-results
