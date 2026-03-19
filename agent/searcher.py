@@ -26,12 +26,12 @@ DATA_VOLTA = "2027-02-15"
 
 
 def buscar_voos():
-    print("Buscando voos para a Europa...")
+    print("Buscando voos para a Europa")
 
     todos_voos = []
 
     for destino in DESTINOS_EUROPA:
-        print(f"Buscando POA -> {destino}...")
+        print(f"Buscando POA -> {destino}")
 
         params = {
             "engine": "google_flights",

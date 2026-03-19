@@ -47,3 +47,14 @@ def enviar_email(promocoes):
 
     response = resend.Emails.send(params)
     print(f"Email enviado! ID: {response['id']}")
+
+
+def enviar_email_status(mensagem):
+    params = {
+        "from": os.getenv("EMAIL_FROM"),
+        "to": os.getenv("EMAIL_TO"),
+        "subject": "Flight Deal Agent - Resumo do dia",
+        "text": mensagem,
+    }
+    response = resend.Emails.send(params)
+    print(f"Email de status enviado! ID: {response['id']}")
