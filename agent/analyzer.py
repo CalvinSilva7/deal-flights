@@ -35,7 +35,7 @@ def classificar_preco(preco):
 
 
 def analisar_promocoes(voos):
-    print("\nAnalisando precos...")
+    print("\nAnalisando precos")
 
     promocoes = []
 

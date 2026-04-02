@@ -43,6 +43,7 @@ def buscar_voos():
             "currency": "BRL",
             "hl": "pt",
             "adults": "1",
+            "sort_by": "1",
             "api_key": SERPAPI_KEY,
         }
 
