@@ -6,13 +6,21 @@ load_dotenv()
 
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-PRECO_INCRIVEL = 300
-PRECO_BOM = 500
-PRECO_MAXIMO = 800
+PRECO_INCRIVEL = 3500
+PRECO_BOM = 4500
+PRECO_MAXIMO = 6000
 
 DESTINOS_NOMES = {
-    "GIG": "Rio de Janeiro (Galeão)",
-    "SDU": "Rio de Janeiro (Santos Dumont)",
+    "LIS": "Lisboa",
+    "LHR": "Londres",
+    "CDG": "Paris",
+    "MAD": "Madrid",
+    "FCO": "Roma",
+    "AMS": "Amsterdã",
+    "FRA": "Frankfurt",
+    "BCN": "Barcelona",
+    "MXP": "Milão",
+    "VIE": "Viena",
 }
 
 
@@ -38,7 +46,7 @@ def analisar_promocoes(voos):
         classificacao = classificar_preco(voo["preco"])
 
         if classificacao is None:
-            print(f"{voo['origem']} → {voo['destino']}: R${voo['preco']} - acima do limite")
+            print(f"POA → {voo['destino']}: R${voo['preco']} - acima do limite")
             continue
 
         analise = analisar_com_ia(voo, classificacao)
@@ -46,7 +54,7 @@ def analisar_promocoes(voos):
         voo["classificacao"] = classificacao
         voo["cidade"] = DESTINOS_NOMES.get(voo["destino"], voo["destino"])
         promocoes.append(voo)
-        print(f"{voo['origem']} → {voo['cidade']}: R${voo['preco']} - {classificacao}")
+        print(f"POA → {voo['cidade']}: R${voo['preco']} - {classificacao}")
 
     promocoes.sort(key=lambda v: v["preco"])
     return promocoes[:3]
@@ -62,17 +70,17 @@ def analisar_com_ia(voo, classificacao):
     else:
         tom = "racional e informativo, diga que vale considerar mas nao é excepcional"
 
-    prompt = f"""Você é um especialista em passagens aéreas no Brasil.
+    prompt = f"""Você é um especialista em viagens para a Europa.
 
-Viagem: {voo['origem']} → {cidade}
-Ida: {voo['data_ida']} | Volta: {voo['data_volta']}
+Viagem: Porto Alegre → {cidade}
+Ida: {voo['data_ida']} | Volta: {voo['data_volta']} (14 dias)
 Preco ida e volta: R${voo['preco']}
 Classificacao: {classificacao}
 Duracao do voo: {voo['duracao'] // 60}h{voo['duracao'] % 60}min
 Escalas: {voo['escalas']}
 Companhia: {voo['companhia']}
 
-Em 2 frases, analise esse preco e diga se vale a pena viajar para {cidade} nessa data.
+Em 2 frases, analise esse preco e diga o que torna {cidade} especial em fevereiro.
 Tom: {tom}
 Sem markdown, sem asteriscos, texto simples apenas."""
 
